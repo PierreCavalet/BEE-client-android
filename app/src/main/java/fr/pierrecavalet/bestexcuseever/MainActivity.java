@@ -15,6 +15,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,25 +31,26 @@ public class MainActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {}
     }
 
-    private EditText mInputMessageView;
     private TextView mOutputMessageView;
 
-    private void attemptSend() {
-        String message = mInputMessageView.getText().toString().trim();
-        if (TextUtils.isEmpty(message)) {
-            return;
-        }
-        mInputMessageView.setText("");
-        mSocket.emit("test", message);
-    }
 
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+
+    private Emitter.Listener onBeesList = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mOutputMessageView.setText(mOutputMessageView.getText() + "test ");
+                    JSONArray beesListJSON = (JSONArray) args[0];
+                    try {
+                        for (int i = 0; i < beesListJSON.length(); i++) {
+                            JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
+                            Bee bee = new Bee(beeJSONObject);
+                            mOutputMessageView.setText(mOutputMessageView.getText() + " " + bee.getContent());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -57,27 +59,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSocket.on("message", onNewMessage);
+        mSocket.on("beesList", onBeesList);
         mSocket.connect();
         setContentView(R.layout.activity_main);
-        mInputMessageView = (EditText) findViewById(R.id.input);
-        mOutputMessageView = (TextView) findViewById(R.id.output);
         Button bouton = (Button) findViewById(R.id.button);
         bouton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        attemptSend();
+                        mSocket.emit("askBeesList");
                     }
                 }
         );
+        mOutputMessageView = (TextView) findViewById(R.id.output);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSocket.disconnect();
-        mSocket.off("message", onNewMessage);
+        mSocket.off("beesList", onBeesList);
     }
 
 }
