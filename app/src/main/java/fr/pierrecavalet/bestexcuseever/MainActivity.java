@@ -1,5 +1,6 @@
 package fr.pierrecavalet.bestexcuseever;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,18 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
-    {
-        try {
-            mSocket = IO.socket("http://149.202.49.136:1337");
-        } catch (URISyntaxException e) {}
-    }
-
     private TextView mOutputMessageView;
 
 
@@ -59,18 +55,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            SocketHandler.setSocket(IO.socket("http://149.202.49.136:1337"));
+        } catch (URISyntaxException e) {}
+        mSocket = SocketHandler.getSocket();
         mSocket.on("beesList", onBeesList);
         mSocket.connect();
         setContentView(R.layout.activity_main);
-        Button bouton = (Button) findViewById(R.id.button);
-        bouton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mSocket.emit("askBeesList");
-                    }
-                }
-        );
+        Button ask = (Button) findViewById(R.id.ask_button);
+        ask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSocket.emit("askBeesList");
+            }
+        });
+        Button switch_to_send = (Button) findViewById(R.id.switch_to_send_button);
+        switch_to_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
+                startActivity(addBeeActivity);
+            }
+        });
         mOutputMessageView = (TextView) findViewById(R.id.output);
     }
 

@@ -2,4 +2,5 @@
     <string name="app_name">Best Excuse Ever</string>
     <string name="sendHint">Message à envoyer</string>
     <string name="send">Envoyer</string>
+    <string name="ask">Demande de bees</string>
 </resources>

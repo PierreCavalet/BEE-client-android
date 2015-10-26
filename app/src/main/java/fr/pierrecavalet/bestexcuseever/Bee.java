@@ -30,6 +30,17 @@ public class Bee {
         this.content = (String) beeJSONObject.get("content");
         this.up = (int) beeJSONObject.get("up");
         this.down = (int) beeJSONObject.get("down");
+        comments = new ArrayList<Comment>();
+    }
+
+    public Bee(String user, String location, String time, String content, int up, int down) {
+        this.user = user;
+        this.location = location;
+        this.time = time;
+        this.content = content;
+        this.up = up;
+        this.down = down;
+        comments = new ArrayList<Comment>();
     }
 
     public String getUser() {
@@ -38,6 +49,17 @@ public class Bee {
 
     public String getContent() {
         return content;
+    }
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("user", this.user);
+        jo.put("location", this.location);
+        jo.put("time", this.time);
+        jo.put("content", this.content);
+        jo.put("up", this.up);
+        jo.put("down", this.down);
+        return jo;
     }
 
 }
