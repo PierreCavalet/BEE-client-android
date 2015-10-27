@@ -3,13 +3,8 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -20,9 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +68,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
                 startActivity(addBeeActivity);
+            }
+        });
+        Button switch_to_sign_in = (Button) findViewById(R.id.switch_to_sign_in_button);
+        switch_to_sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInActivity = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(signInActivity);
+            }
+        });
+        Button switch_to_sign_up = (Button) findViewById(R.id.switch_to_sign_up_button);
+        switch_to_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signUpActivity = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(signUpActivity);
             }
         });
         mOutputMessageView = (TextView) findViewById(R.id.output);

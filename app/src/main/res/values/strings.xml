@@ -3,4 +3,9 @@
     <string name="sendHint">Message à envoyer</string>
     <string name="send">Envoyer</string>
     <string name="ask">Demande de bees</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="passwordHint">Mot de passe</string>
+    <string name="accountHint">Nom de compte</string>
+    <string name="sign_in">Connexion</string>
+    <string name="sign_up">Inscription</string>
 </resources>
