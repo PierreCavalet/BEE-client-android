@@ -21,7 +21,7 @@
         android:id="@+id/password_input"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/send"
         android:id="@+id/send_button"/>

@@ -22,10 +22,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".SignInActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName="fr.pierrecavalet.bestexcuseever.MainActivity">
         </activity>
         <activity android:name=".SignUpActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName="fr.pierrecavalet.bestexcuseever.SignInActivity">
         </activity>
     </application>
 

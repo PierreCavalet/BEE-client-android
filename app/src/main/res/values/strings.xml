@@ -9,5 +9,7 @@
     <string name="sign_in">Connexion</string>
     <string name="sign_up">Inscription</string>
     <string name="action_write_bee">Écrire une Bee</string>
+    <string name="action_profile">Profil</string>
+    <string name="action_login">Connexion</string>
 
 </resources>

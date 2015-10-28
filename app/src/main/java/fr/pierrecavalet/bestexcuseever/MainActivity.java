@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -64,61 +62,60 @@ public class MainActivity extends AppCompatActivity {
         mSocket.on("beesList", onBeesList);
         mSocket.connect();
         setContentView(R.layout.activity_main);
-        Button ask = (Button) findViewById(R.id.ask_button);
-        ask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSocket.emit("askBeesList");
-            }
-        });
-        Button switch_to_sign_in = (Button) findViewById(R.id.switch_to_sign_in_button);
-        switch_to_sign_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInActivity = new Intent(MainActivity.this, SignInActivity.class);
-                startActivity(signInActivity);
-            }
-        });
-        Button switch_to_sign_up = (Button) findViewById(R.id.switch_to_sign_up_button);
-        switch_to_sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signUpActivity = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(signUpActivity);
-            }
-        });
+        mSocket.emit("askBeesList");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if (UserHandler.getUsername() == null) {
+            MenuItem writeBee = menu.findItem(R.id.action_write_bee);
+            writeBee.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_write_bee:
                 writeBee();
                 return true;
+            case R.id.action_profile:
+                profile();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void writeBee() {
+        Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
+        startActivity(addBeeActivity);
+    }
+
+    private void profile() {
+        if (UserHandler.getUsername() == null) {
+            Intent signInActivity = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(signInActivity);
+        }
+    }
+
+
+
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSocket.disconnect();
         mSocket.off("beesList", onBeesList);
-    }
-
-    public void writeBee() {
-        Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
-        startActivity(addBeeActivity);
     }
 
 }
