@@ -8,4 +8,6 @@
     <string name="accountHint">Nom de compte</string>
     <string name="sign_in">Connexion</string>
     <string name="sign_up">Inscription</string>
+    <string name="action_write_bee">Écrire une Bee</string>
+
 </resources>

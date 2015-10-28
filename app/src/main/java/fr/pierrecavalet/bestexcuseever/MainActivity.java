@@ -3,9 +3,12 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -16,12 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
-    private TextView mOutputMessageView;
-
+    private ArrayList<BeeView> mBeeViewList = new ArrayList<BeeView>();
 
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
@@ -31,11 +34,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONArray beesListJSON = (JSONArray) args[0];
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+                    layout.setOrientation(LinearLayout.VERTICAL);
                     try {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
-                            mOutputMessageView.setText(mOutputMessageView.getText() + " " + bee.getContent());
+                            BeeView beeView = new BeeView(MainActivity.this);
+                            beeView.setmBeeContent(bee.getContent());
+                            beeView.setmBeeRest(bee.getUser());
+                            mBeeViewList.add(beeView);
+                            layout.addView(beeView);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -62,14 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 mSocket.emit("askBeesList");
             }
         });
-        Button switch_to_send = (Button) findViewById(R.id.switch_to_send_button);
-        switch_to_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
-                startActivity(addBeeActivity);
-            }
-        });
         Button switch_to_sign_in = (Button) findViewById(R.id.switch_to_sign_in_button);
         switch_to_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +87,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(signUpActivity);
             }
         });
-        mOutputMessageView = (TextView) findViewById(R.id.output);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_write_bee:
+                writeBee();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -94,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mSocket.disconnect();
         mSocket.off("beesList", onBeesList);
+    }
+
+    public void writeBee() {
+        Intent addBeeActivity = new Intent(MainActivity.this, AddBeeActivity.class);
+        startActivity(addBeeActivity);
     }
 
 }

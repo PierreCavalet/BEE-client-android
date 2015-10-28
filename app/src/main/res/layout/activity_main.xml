@@ -5,24 +5,13 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
-    android:id="@+id/layout">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ask"
-        android:id="@+id/ask_button"/>
+    android:id="@+id/layout"
+    android:background="#a4a4a4">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/output"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send"
-        android:id="@+id/switch_to_send_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -35,5 +24,11 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
         android:id="@+id/switch_to_sign_up_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ask"
+        android:id="@+id/ask_button" />
 
 </LinearLayout>
