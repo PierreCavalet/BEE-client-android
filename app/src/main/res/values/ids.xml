@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bee_view_header" type="id"/>
+    <item name="bee_view_content" type="id"/>
+    <item name="bee_view_like" type="id"/>
+    <item name="bee_view_hate" type="id"/>
+    <item name="bee_view_comment" type="id"/>
+</resources>

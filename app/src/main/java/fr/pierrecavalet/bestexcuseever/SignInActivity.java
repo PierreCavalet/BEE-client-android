@@ -21,6 +21,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText mInputAccount;
     private EditText mInputPassword;
     private Socket mSocket;
+    private String account = null;
 
     private Emitter.Listener onSignUpResult = new Emitter.Listener() {
         @Override
@@ -44,6 +45,7 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if ((int) args[0] == 1) {
+                        UserHandler.setUsername(account);
                         finish();
                     }
                 }
@@ -57,7 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
             return;
         }
-
+        this.account = account;
         JSONObject jo = new JSONObject();
         jo.put("account", account);
         jo.put("password", password);

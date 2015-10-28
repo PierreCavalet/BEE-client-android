@@ -23,7 +23,7 @@ public class AddBeeActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(message)) {
             return;
         }
-        Bee bee = new Bee("Odette", "Sauvetat", "10h" , message, 1000, 0);
+        Bee bee = new Bee(UserHandler.getUsername(), "No location yet", null, message, 0, 0);
         mInputMessageView.setText("");
         mSocket.emit("sendBee", bee.toJSONObject());
     }

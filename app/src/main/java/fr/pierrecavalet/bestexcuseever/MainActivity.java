@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private ArrayList<BeeView> mBeeViewList = new ArrayList<BeeView>();
+    private Menu mMenu;
 
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
@@ -40,12 +41,27 @@ public class MainActivity extends AppCompatActivity {
                             Bee bee = new Bee(beeJSONObject);
                             BeeView beeView = new BeeView(MainActivity.this);
                             beeView.setmBeeContent(bee.getContent());
-                            beeView.setmBeeRest(bee.getUser());
+                            beeView.setmBeeHeader(bee.getUser());
                             mBeeViewList.add(beeView);
                             layout.addView(beeView);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onSignInResult = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if ((int) args[0] == 1) {
+                        MenuItem writeBee = mMenu.findItem(R.id.action_write_bee);
+                        writeBee.setVisible(true);
                     }
                 }
             });
@@ -60,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {}
         mSocket = SocketHandler.getSocket();
         mSocket.on("beesList", onBeesList);
+        mSocket.on("signInResult", onSignInResult);
         mSocket.connect();
         setContentView(R.layout.activity_main);
         mSocket.emit("askBeesList");
@@ -67,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);

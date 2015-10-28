@@ -7,15 +7,21 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.util.AttributeSet;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class BeeView extends LinearLayout {
+public class BeeView extends RelativeLayout {
 
     private TextView mBeeContent = null;
-    private TextView mBeeRest = null;
+    private TextView mBeeHeader = null;
+    private ImageButton mLike = null;
+    private ImageButton mHate = null;
+    private ImageButton mComments = null;
 
 
     public BeeView(Context context) {
@@ -32,31 +38,69 @@ public class BeeView extends LinearLayout {
     public void init() {
         int wrap = LayoutParams.WRAP_CONTENT;
         int fill = LayoutParams.FILL_PARENT;
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(fill, wrap);
+        param.setMargins(0, 30, 0, 10);
+        setLayoutParams(param);
 
-        setOrientation(LinearLayout.VERTICAL);
-        setLayoutParams(new LayoutParams(fill, wrap));
+        // border + fond blanc
         setBackgroundResource(R.drawable.custom_background);
+
+        mBeeHeader = new TextView(getContext());
+        mBeeHeader.setTextColor(Color.BLACK);
+        mBeeHeader.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBeeHeader.setBackgroundResource(R.drawable.custom_background_header);
+        mBeeHeader.setId(R.id.bee_view_header);
 
         mBeeContent = new TextView(getContext());
         mBeeContent.setTextColor(Color.BLACK);
-        mBeeRest = new TextView(getContext());
-        mBeeRest.setTextColor(Color.BLACK);
-        mBeeRest.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBeeContent.setBackgroundResource(R.drawable.custom_background_content);
+        mBeeContent.setId(R.id.bee_view_content);
+
+        mLike = new ImageButton(getContext());
+        mLike.setImageResource(R.drawable.ic_exposure_plus_1_black_24dp);
+        mLike.setId(R.id.bee_view_like);
+
+        mHate = new ImageButton(getContext());
+        mHate.setImageResource(R.drawable.ic_exposure_neg_1_black_24dp);
+        mHate.setId(R.id.bee_view_hate);
+
+        mComments = new ImageButton(getContext());
+        mComments.setImageResource(R.drawable.ic_comment_black_24dp);
+        mComments.setId(R.id.bee_view_comment);
+
+        RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(fill, wrap);
+        addView(mBeeHeader, headerParams);
+
+        RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(fill, wrap);
+        contentParams.addRule(BELOW, R.id.bee_view_header);
+        addView(mBeeContent, contentParams);
+
+        RelativeLayout.LayoutParams commentsParam = new RelativeLayout.LayoutParams(wrap, wrap);
+        commentsParam.addRule(BELOW, R.id.bee_view_content);
+        commentsParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        addView(mComments, commentsParam);
+
+        RelativeLayout.LayoutParams hateParams = new RelativeLayout.LayoutParams(wrap, wrap);
+        hateParams.addRule(LEFT_OF, R.id.bee_view_comment);
+        hateParams.addRule(BELOW, R.id.bee_view_content);
+        addView(mHate, hateParams);
 
 
-        mBeeContent.setText("content");
-        mBeeRest.setText("rest");
+        RelativeLayout.LayoutParams likeParams = new RelativeLayout.LayoutParams(wrap, wrap);
+        likeParams.addRule(BELOW, R.id.bee_view_content);
+        likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
+        addView(mLike, likeParams);
 
-        addView(mBeeRest, new LinearLayout.LayoutParams(fill, wrap));
-        addView(mBeeContent, new LinearLayout.LayoutParams(fill, wrap));
+
+
     }
 
     public void setmBeeContent(String s) {
         this.mBeeContent.setText(s);
     }
 
-    public void setmBeeRest(String s) {
-        this.mBeeRest.setText(s);
+    public void setmBeeHeader(String s) {
+        this.mBeeHeader.setText(s);
     }
 }
 
