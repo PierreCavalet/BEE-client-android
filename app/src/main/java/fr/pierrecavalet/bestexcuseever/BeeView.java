@@ -9,11 +9,15 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.github.nkzawa.socketio.client.Socket;
+
 
 public class BeeView extends RelativeLayout {
 
@@ -22,10 +26,17 @@ public class BeeView extends RelativeLayout {
     private ImageButton mLike = null;
     private ImageButton mHate = null;
     private ImageButton mComments = null;
+    private Socket mSocket = null;
 
 
     public BeeView(Context context) {
         super(context);
+        init();
+    }
+
+    public BeeView(Context context, Socket socket) {
+        super(context);
+        this.mSocket = socket;
         init();
     }
 
@@ -68,6 +79,16 @@ public class BeeView extends RelativeLayout {
         mComments.setImageResource(R.drawable.ic_comment_black_24dp);
         mComments.setId(R.id.bee_view_comment);
 
+        if(mSocket != null) {
+            mComments.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // envoyer l'id de la bee.
+                    System.out.println("demande des coms");
+                    mSocket.emit("askBeeComments", 1);
+                }
+            });
+        }
+
         RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(fill, wrap);
         addView(mBeeHeader, headerParams);
 
@@ -85,15 +106,13 @@ public class BeeView extends RelativeLayout {
         hateParams.addRule(BELOW, R.id.bee_view_content);
         addView(mHate, hateParams);
 
-
         RelativeLayout.LayoutParams likeParams = new RelativeLayout.LayoutParams(wrap, wrap);
         likeParams.addRule(BELOW, R.id.bee_view_content);
         likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
         addView(mLike, likeParams);
-
-
-
     }
+
+
 
     public void setmBeeContent(String s) {
         this.mBeeContent.setText(s);

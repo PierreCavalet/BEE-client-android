@@ -1,6 +1,7 @@
 package fr.pierrecavalet.bestexcuseever;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  */
 public class Bee {
 
+    private int id;
     private String user;
     private String location;
     private String time;
@@ -24,6 +26,7 @@ public class Bee {
     }
 
     public Bee(JSONObject beeJSONObject) throws JSONException {
+        this.id = (int) beeJSONObject.get("id");
         this.user = (String) beeJSONObject.get("user");
         this.location = (String) beeJSONObject.get("location");
         this.time = (String) beeJSONObject.get("time");
@@ -34,6 +37,7 @@ public class Bee {
     }
 
     public Bee(String user, String location, String time, String content, int up, int down) {
+        this.id = 0;
         this.user = user;
         this.location = location;
         this.time = time;
@@ -60,6 +64,13 @@ public class Bee {
         jo.put("up", this.up);
         jo.put("down", this.down);
         return jo;
+    }
+
+    public void loadComments(JSONArray commentsJSONArray) throws JSONException {
+        for(int i=0; i < commentsJSONArray.length(); i++) {
+            JSONObject commentJSONObject = (JSONObject) commentsJSONArray.get(i);
+            //this.comments.add(new Comment());
+        }
     }
 
 }
