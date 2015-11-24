@@ -10,7 +10,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:orientation="vertical"
-        android:id="@+id/layout"
+        android:id="@+id/commentLayout"
         android:background="#a4a4a4">
 
 

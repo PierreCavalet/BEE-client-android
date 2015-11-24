@@ -55,8 +55,13 @@ public class Bee {
         return content;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public JSONObject toJSONObject() throws JSONException {
         JSONObject jo = new JSONObject();
+        jo.put("id", this.id);
         jo.put("user", this.user);
         jo.put("location", this.location);
         jo.put("time", this.time);

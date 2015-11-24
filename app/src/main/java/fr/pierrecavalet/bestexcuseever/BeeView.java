@@ -5,12 +5,11 @@ package fr.pierrecavalet.bestexcuseever;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,15 +17,19 @@ import android.widget.TextView;
 
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONException;
+
 
 public class BeeView extends RelativeLayout {
 
+    private Bee mBee = null;
     private TextView mBeeContent = null;
     private TextView mBeeHeader = null;
     private ImageButton mLike = null;
     private ImageButton mHate = null;
     private ImageButton mComments = null;
     private Socket mSocket = null;
+    private boolean hideButtons = false;
 
 
     public BeeView(Context context) {
@@ -34,9 +37,11 @@ public class BeeView extends RelativeLayout {
         init();
     }
 
-    public BeeView(Context context, Socket socket) {
+    public BeeView(Context context, Bee bee, Socket socket, boolean hide) {
         super(context);
+        this.mBee = bee;
         this.mSocket = socket;
+        this.hideButtons = hide;
         init();
     }
 
@@ -56,6 +61,7 @@ public class BeeView extends RelativeLayout {
         // border + fond blanc
         setBackgroundResource(R.drawable.custom_background);
 
+        // initialisation des TextView et ImageButton
         mBeeHeader = new TextView(getContext());
         mBeeHeader.setTextColor(Color.BLACK);
         mBeeHeader.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -67,28 +73,23 @@ public class BeeView extends RelativeLayout {
         mBeeContent.setBackgroundResource(R.drawable.custom_background_content);
         mBeeContent.setId(R.id.bee_view_content);
 
-        mLike = new ImageButton(getContext());
-        mLike.setImageResource(R.drawable.ic_exposure_plus_1_black_24dp);
-        mLike.setId(R.id.bee_view_like);
+        if(!hideButtons) {
+            mLike = new ImageButton(getContext());
+            mLike.setImageResource(R.drawable.ic_exposure_plus_1_black_24dp);
+            mLike.setId(R.id.bee_view_like);
 
-        mHate = new ImageButton(getContext());
-        mHate.setImageResource(R.drawable.ic_exposure_neg_1_black_24dp);
-        mHate.setId(R.id.bee_view_hate);
+            mHate = new ImageButton(getContext());
+            mHate.setImageResource(R.drawable.ic_exposure_neg_1_black_24dp);
+            mHate.setId(R.id.bee_view_hate);
 
-        mComments = new ImageButton(getContext());
-        mComments.setImageResource(R.drawable.ic_comment_black_24dp);
-        mComments.setId(R.id.bee_view_comment);
-
-        if(mSocket != null) {
-            mComments.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // envoyer l'id de la bee.
-                    System.out.println("demande des coms");
-                    mSocket.emit("askBeeComments", 1);
-                }
-            });
+            mComments = new ImageButton(getContext());
+            mComments.setImageResource(R.drawable.ic_comment_black_24dp);
+            mComments.setId(R.id.bee_view_comment);
         }
 
+
+
+        // insertion et placement des TextView et ImageButton sur le layout
         RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(fill, wrap);
         addView(mBeeHeader, headerParams);
 
@@ -96,22 +97,45 @@ public class BeeView extends RelativeLayout {
         contentParams.addRule(BELOW, R.id.bee_view_header);
         addView(mBeeContent, contentParams);
 
-        RelativeLayout.LayoutParams commentsParam = new RelativeLayout.LayoutParams(wrap, wrap);
-        commentsParam.addRule(BELOW, R.id.bee_view_content);
-        commentsParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        addView(mComments, commentsParam);
+        if(!hideButtons) {
+            RelativeLayout.LayoutParams commentsParam = new RelativeLayout.LayoutParams(wrap, wrap);
+            commentsParam.addRule(BELOW, R.id.bee_view_content);
+            commentsParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            addView(mComments, commentsParam);
 
-        RelativeLayout.LayoutParams hateParams = new RelativeLayout.LayoutParams(wrap, wrap);
-        hateParams.addRule(LEFT_OF, R.id.bee_view_comment);
-        hateParams.addRule(BELOW, R.id.bee_view_content);
-        addView(mHate, hateParams);
+            RelativeLayout.LayoutParams hateParams = new RelativeLayout.LayoutParams(wrap, wrap);
+            hateParams.addRule(LEFT_OF, R.id.bee_view_comment);
+            hateParams.addRule(BELOW, R.id.bee_view_content);
+            addView(mHate, hateParams);
 
-        RelativeLayout.LayoutParams likeParams = new RelativeLayout.LayoutParams(wrap, wrap);
-        likeParams.addRule(BELOW, R.id.bee_view_content);
-        likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
-        addView(mLike, likeParams);
+            RelativeLayout.LayoutParams likeParams = new RelativeLayout.LayoutParams(wrap, wrap);
+            likeParams.addRule(BELOW, R.id.bee_view_content);
+            likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
+            addView(mLike, likeParams);
+        }
+
+        // gestion du contenu de la vue en fonction de la bee
+        if(mBee != null) {
+            this.mBeeHeader.setText(mBee.getUser());
+            this.mBeeContent.setText(mBee.getContent());
+
+            // evenement pour demander les commentaires
+            if(mSocket != null && !hideButtons) {
+                mComments.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        mSocket.emit("askBeeComments", mBee.getId());
+                        Intent commentActivity = new Intent(getContext(), CommentActivity.class);
+                        try {
+                            commentActivity.putExtra("bee", mBee.toJSONObject().toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        getContext().startActivity(commentActivity);
+                    }
+                });
+            }
+        }
     }
-
 
 
     public void setmBeeContent(String s) {

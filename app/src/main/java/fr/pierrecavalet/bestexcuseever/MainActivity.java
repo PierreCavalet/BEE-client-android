@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
-                            BeeView beeView = new BeeView(MainActivity.this, mSocket);
-                            beeView.setmBeeContent(bee.getContent());
-                            beeView.setmBeeHeader(bee.getUser());
+                            BeeView beeView = new BeeView(MainActivity.this, bee, mSocket, false);
                             mBeeViewList.add(beeView);
                             layout.addView(beeView);
                         }
@@ -68,27 +66,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private Emitter.Listener onBeeCommentsList = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("coms recus");
-                    JSONArray commentsListJSON = (JSONArray) args[0];
-                    try {
-                        for (int i = 0; i < commentsListJSON.length(); i++) {
-                            JSONObject commentJSONObject = (JSONObject) commentsListJSON.get(i);
-                            System.out.println("content : " + commentJSONObject);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         mSocket = SocketHandler.getSocket();
         mSocket.on("beesList", onBeesList);
         mSocket.on("signInResult", onSignInResult);
-        mSocket.on("beeCommentsList", onBeeCommentsList);
         mSocket.connect();
         setContentView(R.layout.activity_main);
         mSocket.emit("askBeesList");
