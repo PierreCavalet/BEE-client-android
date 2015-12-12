@@ -3,6 +3,8 @@
     package="fr.pierrecavalet.bestexcuseever" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +23,7 @@
         </activity>
         <activity
             android:name=".AddBeeActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -33,7 +36,15 @@
             android:parentActivityName=".SignInActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".CommentActivity" >
+        <activity
+            android:name=".CommentActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".BeeActivity"
+            android:label="@string/title_activity_bee"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

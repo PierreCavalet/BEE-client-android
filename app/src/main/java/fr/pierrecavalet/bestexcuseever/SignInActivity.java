@@ -16,6 +16,9 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.pierrecavalet.sync.SocketHandler;
+import fr.pierrecavalet.sync.UserHandler;
+
 public class SignInActivity extends AppCompatActivity {
 
     private EditText mInputAccount;

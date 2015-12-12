@@ -8,8 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,10 +22,13 @@ import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 
+import fr.pierrecavalet.models.Bee;
 
-public class BeeView extends RelativeLayout {
+
+public class BeeView extends CardView {
 
     private Bee mBee = null;
+    private RelativeLayout mLayout = null;
     private TextView mBeeContent = null;
     private TextView mBeeHeader = null;
     private ImageButton mLike = null;
@@ -52,28 +58,26 @@ public class BeeView extends RelativeLayout {
     }
 
     public void init() {
-        int wrap = LayoutParams.WRAP_CONTENT;
-        int fill = LayoutParams.FILL_PARENT;
-        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(fill, wrap);
-        param.setMargins(0, 30, 0, 10);
-        setLayoutParams(param);
 
-        // border + fond blanc
-        setBackgroundResource(R.drawable.custom_background);
-
+        setMinimumHeight(400);
+        mLayout = new RelativeLayout(getContext());
         // initialisation des TextView et ImageButton
         mBeeHeader = new TextView(getContext());
-        mBeeHeader.setTextColor(Color.BLACK);
         mBeeHeader.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        mBeeHeader.setBackgroundResource(R.drawable.custom_background_header);
         mBeeHeader.setId(R.id.bee_view_header);
+        RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayout.addView(mBeeHeader, headerParams);
+
 
         mBeeContent = new TextView(getContext());
-        mBeeContent.setTextColor(Color.BLACK);
-        mBeeContent.setBackgroundResource(R.drawable.custom_background_content);
         mBeeContent.setId(R.id.bee_view_content);
+        RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        contentParams.addRule(mLayout.BELOW, R.id.bee_view_header);
+        mLayout.addView(mBeeContent, contentParams);
 
-        if(!hideButtons) {
+        /*if(!hideButtons) {
             mLike = new ImageButton(getContext());
             mLike.setImageResource(R.drawable.ic_exposure_plus_1_black_24dp);
             mLike.setId(R.id.bee_view_like);
@@ -88,14 +92,6 @@ public class BeeView extends RelativeLayout {
         }
 
 
-
-        // insertion et placement des TextView et ImageButton sur le layout
-        RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(fill, wrap);
-        addView(mBeeHeader, headerParams);
-
-        RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(fill, wrap);
-        contentParams.addRule(BELOW, R.id.bee_view_header);
-        addView(mBeeContent, contentParams);
 
         if(!hideButtons) {
             RelativeLayout.LayoutParams commentsParam = new RelativeLayout.LayoutParams(wrap, wrap);
@@ -112,7 +108,7 @@ public class BeeView extends RelativeLayout {
             likeParams.addRule(BELOW, R.id.bee_view_content);
             likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
             addView(mLike, likeParams);
-        }
+        }*/
 
         // gestion du contenu de la vue en fonction de la bee
         if(mBee != null) {
@@ -120,7 +116,7 @@ public class BeeView extends RelativeLayout {
             this.mBeeContent.setText(mBee.getContent());
 
             // evenement pour demander les commentaires
-            if(mSocket != null && !hideButtons) {
+            /*if(mSocket != null && !hideButtons) {
                 mComments.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         mSocket.emit("askBeeComments", mBee.getId());
@@ -133,8 +129,10 @@ public class BeeView extends RelativeLayout {
                         getContext().startActivity(commentActivity);
                     }
                 });
-            }
+            }*/
         }
+
+        addView(mLayout);
     }
 
 

@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,8 +18,16 @@ public class Comment {
     }
 
     public Comment(JSONObject beeJSONObject) throws JSONException {
-        this.username = (String) beeJSONObject.get("account");
+        this.username = (String) beeJSONObject.get("user");
         this.time = (String) beeJSONObject.get("time");
         this.content = (String) beeJSONObject.get("content");
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getContent() {
+        return content;
     }
 }

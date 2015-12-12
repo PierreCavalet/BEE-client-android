@@ -3,10 +3,12 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -18,6 +20,10 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+
+import fr.pierrecavalet.models.Bee;
+import fr.pierrecavalet.sync.SocketHandler;
+import fr.pierrecavalet.sync.UserHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void profile() {
         if (UserHandler.getUsername() == null) {
-            Intent signInActivity = new Intent(MainActivity.this, SignInActivity.class);
+            Intent signInActivity = new Intent(MainActivity.this, BeeActivity.class);
             startActivity(signInActivity);
         }
     }

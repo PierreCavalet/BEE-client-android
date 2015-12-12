@@ -11,5 +11,7 @@
     <string name="action_write_bee">Écrire une Bee</string>
     <string name="action_profile">Profil</string>
     <string name="action_login">Connexion</string>
+    <string name="title_activity_bee">BeeActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

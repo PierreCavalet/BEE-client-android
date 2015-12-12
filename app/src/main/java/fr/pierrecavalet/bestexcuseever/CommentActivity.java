@@ -11,6 +11,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import fr.pierrecavalet.models.Bee;
+import fr.pierrecavalet.models.Comment;
+import fr.pierrecavalet.sync.SocketHandler;
+
 public class CommentActivity extends AppCompatActivity {
 
     private Socket mSocket;
@@ -22,13 +28,19 @@ public class CommentActivity extends AppCompatActivity {
             CommentActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("coms recus");
                     JSONArray commentsListJSON = (JSONArray) args[0];
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.commentLayout);
+                    layout.setOrientation(LinearLayout.VERTICAL);
                     try {
+                        ArrayList<Comment> listComment = new ArrayList<Comment>();
                         for (int i = 0; i < commentsListJSON.length(); i++) {
                             JSONObject commentJSONObject = (JSONObject) commentsListJSON.get(i);
-                            System.out.println("content : " + commentJSONObject);
+                            System.out.println("comment : " + commentJSONObject);
+                            Comment comment = new Comment(commentJSONObject);
+                            listComment.add(comment);
                         }
+                        CommentsView commentsView = new CommentsView(CommentActivity.this, listComment);
+                        layout.addView(commentsView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -49,7 +61,6 @@ public class CommentActivity extends AppCompatActivity {
         // récupération de la bee
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            System.out.println("if");
             String beeString = extras.getString("bee");
             try {
                 JSONObject beeJSONObject = new JSONObject(beeString);
@@ -57,11 +68,10 @@ public class CommentActivity extends AppCompatActivity {
                 mBeeView = new BeeView(CommentActivity.this, bee, mSocket, true);
                 LinearLayout layout = (LinearLayout) findViewById(R.id.commentLayout);
                 layout.addView(mBeeView);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("ifnot");
         }
     }
 }
