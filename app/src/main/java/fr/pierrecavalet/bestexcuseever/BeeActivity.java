@@ -37,7 +37,7 @@ public class BeeActivity extends AppCompatActivity {
                 JSONObject beeJSONObject = new JSONObject(beeString);
                 Bee bee = new Bee(beeJSONObject);
                 TextView beeContent = (TextView) findViewById(R.id.content_bee);
-
+                beeContent.setText(bee.getContent());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

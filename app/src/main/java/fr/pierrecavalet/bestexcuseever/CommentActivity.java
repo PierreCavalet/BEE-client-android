@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import fr.pierrecavalet.models.Bee;
 import fr.pierrecavalet.models.Comment;
 import fr.pierrecavalet.sync.SocketHandler;
+import fr.pierrecavalet.views.BeeView;
+import fr.pierrecavalet.views.CommentsView;
 
 public class CommentActivity extends AppCompatActivity {
 
@@ -65,7 +67,7 @@ public class CommentActivity extends AppCompatActivity {
             try {
                 JSONObject beeJSONObject = new JSONObject(beeString);
                 Bee bee = new Bee(beeJSONObject);
-                mBeeView = new BeeView(CommentActivity.this, bee, mSocket, true);
+                mBeeView = new BeeView(CommentActivity.this, bee, mSocket);
                 LinearLayout layout = (LinearLayout) findViewById(R.id.commentLayout);
                 layout.addView(mBeeView);
 

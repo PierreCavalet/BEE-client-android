@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="bee_view_header" type="id"/>
+    <item name="bee_view_title" type="id"/>
     <item name="bee_view_content" type="id"/>
     <item name="bee_view_like" type="id"/>
-    <item name="bee_view_hate" type="id"/>
+    <item name="bee_view_dislike" type="id"/>
     <item name="bee_view_comment" type="id"/>
+    <item name="bee_view_line" type="id" />
+    <item name="bee_view_date" type="id" />
+    <item name="bee_view_image_date" type="id" />
+    <item name="bee_view_image_location" type="id" />
+    <item name="bee_view_location" type="id" />
 </resources>
