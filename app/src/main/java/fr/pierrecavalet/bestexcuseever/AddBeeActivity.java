@@ -1,6 +1,9 @@
 package fr.pierrecavalet.bestexcuseever;
 
+import android.content.Intent;
 import android.location.Location;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,6 +31,31 @@ public class AddBeeActivity extends AppCompatActivity implements
     private EditText mMessage;
     private EditText mLocation;
     private Socket mSocket;
+    private AddressResultReceiver mResultReceiver;
+
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string
+            // or an error message sent from the intent service.
+            mLocation.setText(resultData.getString(Constants.RESULT_DATA_KEY));
+
+            // Show a toast message if an address was found.
+            if (resultCode == Constants.SUCCESS_RESULT) {
+                showToast(getString(R.string.address_found));
+            }
+
+        }
+    }
+
+    private void showToast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
 
     // gps
     private GoogleApiClient mGoogleApiClient;
@@ -91,9 +120,13 @@ public class AddBeeActivity extends AppCompatActivity implements
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-            mLocation.setText("lat : " + String.valueOf(mLastLocation.getLatitude()) + "    long : " + String.valueOf(mLastLocation.getLongitude()));
             Log.d("latitude", String.valueOf(mLastLocation.getLatitude()));
             Log.d("longitude", String.valueOf(mLastLocation.getLongitude()));
+            Intent intent = new Intent(this, FetchAddressIntentService.class);
+            mResultReceiver = new AddressResultReceiver(new Handler());
+            intent.putExtra(Constants.RECEIVER, mResultReceiver);
+            intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
+            startService(intent);
         }
     }
 

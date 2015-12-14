@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ public class FetchAddressIntentService extends IntentService {
         Location location = intent.getParcelableExtra(
                 Constants.LOCATION_DATA_EXTRA);
 
+        mReceiver = intent.getParcelableExtra(
+                Constants.RECEIVER);
+
         List<Address> addresses = null;
 
         try {
@@ -48,8 +52,15 @@ public class FetchAddressIntentService extends IntentService {
                     1);
         } catch (IOException ioException) {
             // Catch network or other I/O problems.
+            errorMessage = "I/O problems";
+            Log.e("HandleIntent", errorMessage, ioException);
         } catch (IllegalArgumentException illegalArgumentException) {
             // Catch invalid latitude or longitude values.
+            errorMessage = "invalid_lat_long_used";
+            Log.e("HandleIntent", errorMessage + ". " +
+                    "Latitude = " + location.getLatitude() +
+                    ", Longitude = " +
+                    location.getLongitude(), illegalArgumentException);
         }
 
         // Handle case where no address was found.
@@ -68,8 +79,8 @@ public class FetchAddressIntentService extends IntentService {
                 addressFragments.add(address.getAddressLine(i));
             }
             deliverResultToReceiver(Constants.SUCCESS_RESULT,
-                    TextUtils.join(System.getProperty("line.separator"),
-                            addressFragments));
+                    address.getLocality() + ", " + address.getCountryName());
+
         }
     }
 
