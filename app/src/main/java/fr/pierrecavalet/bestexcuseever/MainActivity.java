@@ -3,6 +3,7 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,10 +12,13 @@ import android.widget.LinearLayout;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private Socket mSocket;
     private ArrayList<BeeView> mBeeViewList = new ArrayList<BeeView>();
     private Menu mMenu;
-
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
         @Override
@@ -81,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
         mSocket.on("beesList", onBeesList);
         mSocket.on("signInResult", onSignInResult);
         mSocket.connect();
-        setContentView(R.layout.activity_main);
         mSocket.emit("askBeesList");
+        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -128,15 +131,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSocket.disconnect();
         mSocket.off("beesList", onBeesList);
     }
-
 }

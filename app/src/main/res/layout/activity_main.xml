@@ -14,6 +14,15 @@
         android:id="@+id/layout"
         android:background="@color/colorBackground">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/longitude" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/latitude" />
 
     </LinearLayout>
 </ScrollView>

@@ -31,6 +31,7 @@ public class BeeView extends CardView {
 
     private ImageView mDateImage = null;
     private ImageView mLocationImage = null;
+    private ImageView mAuthorImage = null;
 
     private CardView mLike = null;
     private CardView mDislike = null;
@@ -57,19 +58,31 @@ public class BeeView extends CardView {
     }
 
     public void init() {
-
+        // layout
         mLayout = new RelativeLayout(getContext());
         mLayout.setPadding(30, 10, 30, 10);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         addView(mLayout, layoutParams);
 
+        // Author img
+        mAuthorImage =  new ImageView(getContext());
+        mAuthorImage.setPadding(0, 10, 0, 20);
+        mAuthorImage.setId(R.id.bee_view_image_author);
+        mAuthorImage.setImageResource(R.drawable.ic_create_black_36dp);
+        RelativeLayout.LayoutParams imageAuthorParams = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        imageAuthorParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        mLayout.addView(mAuthorImage, imageAuthorParams);
+
         // Author
         mAuthor = new TextView(getContext());
-        mAuthor.setId(R.id.bee_view_title);
-        mAuthor.setTextSize(30);
+        mAuthor.setId(R.id.bee_view_author);
+        mAuthor.setTextSize(36);
+        mAuthor.setTextColor(Color.BLACK);
         RelativeLayout.LayoutParams authorParams = new RelativeLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        authorParams.addRule(mLayout.RIGHT_OF, R.id.bee_view_image_author);
         mLayout.addView(mAuthor, authorParams);
 
         // content
@@ -78,7 +91,7 @@ public class BeeView extends CardView {
         mContent.setPadding(0, 0, 0, 30);
         RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        contentParams.addRule(mLayout.BELOW, R.id.bee_view_title);
+        contentParams.addRule(mLayout.BELOW, R.id.bee_view_image_author);
         mLayout.addView(mContent, contentParams);
 
         // date img

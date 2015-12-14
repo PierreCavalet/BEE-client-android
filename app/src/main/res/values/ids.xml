@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="bee_view_title" type="id"/>
+    <item name="bee_view_author" type="id"/>
     <item name="bee_view_content" type="id"/>
     <item name="bee_view_like" type="id"/>
     <item name="bee_view_dislike" type="id"/>
@@ -10,4 +10,5 @@
     <item name="bee_view_image_date" type="id" />
     <item name="bee_view_image_location" type="id" />
     <item name="bee_view_location" type="id" />
+    <item name="bee_view_image_author" type="id" />
 </resources>

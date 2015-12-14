@@ -11,7 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/sendHint"
-        android:id="@+id/input"/>
+        android:id="@+id/message"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sendHint"
+        android:id="@+id/location"/>
 
     <Button
         android:layout_width="wrap_content"
