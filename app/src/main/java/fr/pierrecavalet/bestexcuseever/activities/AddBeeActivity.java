@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.bestexcuseever.activities;
 
 import android.content.Intent;
 import android.location.Location;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.Socket;
@@ -21,9 +20,12 @@ import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONException;
 
-import fr.pierrecavalet.models.Bee;
-import fr.pierrecavalet.sync.SocketHandler;
-import fr.pierrecavalet.sync.UserHandler;
+import fr.pierrecavalet.bestexcuseever.Constants;
+import fr.pierrecavalet.bestexcuseever.FetchAddressIntentService;
+import fr.pierrecavalet.bestexcuseever.R;
+import fr.pierrecavalet.bestexcuseever.models.Bee;
+import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
+import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 
 public class AddBeeActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {

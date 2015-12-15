@@ -1,4 +1,4 @@
-package fr.pierrecavalet.models;
+package fr.pierrecavalet.bestexcuseever.models;
 
 
 import org.json.JSONArray;

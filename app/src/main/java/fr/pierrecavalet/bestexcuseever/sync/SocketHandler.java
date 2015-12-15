@@ -1,4 +1,4 @@
-package fr.pierrecavalet.sync;
+package fr.pierrecavalet.bestexcuseever.sync;
 
 import com.github.nkzawa.socketio.client.Socket;
 

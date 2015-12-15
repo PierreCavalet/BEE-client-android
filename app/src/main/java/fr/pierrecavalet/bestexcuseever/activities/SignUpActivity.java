@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.bestexcuseever.activities;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,8 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.pierrecavalet.sync.SocketHandler;
+import fr.pierrecavalet.bestexcuseever.R;
+import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 
 public class SignUpActivity extends AppCompatActivity {
 

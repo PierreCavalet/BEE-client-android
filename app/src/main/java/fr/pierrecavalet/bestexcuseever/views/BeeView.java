@@ -1,4 +1,4 @@
-package fr.pierrecavalet.views;
+package fr.pierrecavalet.bestexcuseever.views;
 
 /**
  * Created by Pierre on 27/10/2015.
@@ -7,6 +7,8 @@ package fr.pierrecavalet.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +18,7 @@ import android.widget.TextView;
 import com.github.nkzawa.socketio.client.Socket;
 
 import fr.pierrecavalet.bestexcuseever.R;
-import fr.pierrecavalet.models.Bee;
+import fr.pierrecavalet.bestexcuseever.models.Bee;
 
 
 public class BeeView extends CardView {
@@ -91,7 +93,7 @@ public class BeeView extends CardView {
         mContent.setPadding(0, 0, 0, 30);
         RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        contentParams.addRule(mLayout.BELOW, R.id.bee_view_image_author);
+        contentParams.addRule(mLayout.BELOW, R.id.bee_view_email);
         mLayout.addView(mContent, contentParams);
 
         // date img
@@ -182,39 +184,29 @@ public class BeeView extends CardView {
         commentsParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         mLayout.addView(mComments, commentsParams);
 
+        // Phone number
+        TextView phone = new TextView(getContext());
+        phone.setText(Html.fromHtml("<a href=\"tel:0123456789\">0123456789</a>"));
+        phone.setId(R.id.bee_view_phone);
+        phone.setTextSize(20);
+        phone.setPadding(0, 0, 0, 10);
+        RelativeLayout.LayoutParams phoneParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        phoneParams.addRule(mLayout.BELOW, R.id.bee_view_image_author);
+        phone.setMovementMethod(LinkMovementMethod.getInstance());
+        mLayout.addView(phone, phoneParams);
 
-
-
-
-        /*mLike = new ImageButton(getContext());
-        mLike.setImageResource(R.drawable.ic_exposure_plus_1_black_24dp);
-        mLike.setId(R.id.bee_view_like);
-
-        mHate = new ImageButton(getContext());
-        mHate.setImageResource(R.drawable.ic_exposure_neg_1_black_24dp);
-        mHate.setId(R.id.bee_view_hate);*/
-
-        /*mComments = new ImageButton(getContext());
-        mComments.setImageResource(R.drawable.ic_comment_black_24dp);
-        mComments.setId(R.id.bee_view_comment);
-
-
-
-        RelativeLayout.LayoutParams commentsParam = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        commentsParam.addRule(mLayout.BELOW, R.id.bee_view_content);
-        commentsParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        addView(mComments, commentsParam);*/
-
-        /*RelativeLayout.LayoutParams hateParams = new RelativeLayout.LayoutParams(wrap, wrap);
-        hateParams.addRule(LEFT_OF, R.id.bee_view_comment);
-        hateParams.addRule(BELOW, R.id.bee_view_content);
-        addView(mHate, hateParams);
-
-        RelativeLayout.LayoutParams likeParams = new RelativeLayout.LayoutParams(wrap, wrap);
-        likeParams.addRule(BELOW, R.id.bee_view_content);
-        likeParams.addRule(LEFT_OF, R.id.bee_view_hate);
-        addView(mLike, likeParams);*/
+        // E-mail adress
+        TextView email = new TextView(getContext());
+        email.setText(Html.fromHtml("<a href=\"mailto:mail@mail.com\">mail@mail.com</a>"));
+        email.setId(R.id.bee_view_email);
+        email.setTextSize(20);
+        email.setPadding(0, 0, 0, 10);
+        RelativeLayout.LayoutParams emailParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        emailParams.addRule(mLayout.BELOW, R.id.bee_view_phone);
+        email.setMovementMethod(LinkMovementMethod.getInstance());
+        mLayout.addView(email, emailParams);
 
 
         // gestion du contenu de la vue en fonction de la bee

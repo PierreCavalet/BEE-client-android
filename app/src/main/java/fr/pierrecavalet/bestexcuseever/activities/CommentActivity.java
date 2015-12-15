@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.bestexcuseever.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +13,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import fr.pierrecavalet.models.Bee;
-import fr.pierrecavalet.models.Comment;
-import fr.pierrecavalet.sync.SocketHandler;
-import fr.pierrecavalet.views.BeeView;
-import fr.pierrecavalet.views.CommentsView;
+import fr.pierrecavalet.bestexcuseever.R;
+import fr.pierrecavalet.bestexcuseever.models.Bee;
+import fr.pierrecavalet.bestexcuseever.models.Comment;
+import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
+import fr.pierrecavalet.bestexcuseever.views.BeeView;
+import fr.pierrecavalet.bestexcuseever.views.CommentsView;
 
 public class CommentActivity extends AppCompatActivity {
 

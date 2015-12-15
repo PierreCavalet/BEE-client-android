@@ -1,9 +1,8 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.bestexcuseever.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,21 +11,19 @@ import android.widget.LinearLayout;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import fr.pierrecavalet.models.Bee;
-import fr.pierrecavalet.sync.SocketHandler;
-import fr.pierrecavalet.sync.UserHandler;
-import fr.pierrecavalet.views.BeeView;
+import fr.pierrecavalet.bestexcuseever.R;
+import fr.pierrecavalet.bestexcuseever.models.Bee;
+import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
+import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
+import fr.pierrecavalet.bestexcuseever.views.BeeView;
 
 public class MainActivity extends AppCompatActivity {
 

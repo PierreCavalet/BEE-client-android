@@ -11,4 +11,6 @@
     <item name="bee_view_image_location" type="id" />
     <item name="bee_view_location" type="id" />
     <item name="bee_view_image_author" type="id" />
+    <item name="bee_view_phone" type="id" />
+    <item name="bee_view_email" type="id" />
 </resources>

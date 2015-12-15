@@ -1,4 +1,4 @@
-package fr.pierrecavalet.views;
+package fr.pierrecavalet.bestexcuseever.views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.pierrecavalet.bestexcuseever.R;
-import fr.pierrecavalet.models.Comment;
+import fr.pierrecavalet.bestexcuseever.models.Comment;
 
 /**
  * Created by pierre on 24/11/15.
