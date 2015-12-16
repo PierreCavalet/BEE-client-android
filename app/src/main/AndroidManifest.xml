@@ -40,10 +40,6 @@
             android:name=".activities.CommentActivity"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activities.BeeActivity"
-            android:label="@string/title_activity_bee"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service
             android:name=".FetchAddressIntentService"

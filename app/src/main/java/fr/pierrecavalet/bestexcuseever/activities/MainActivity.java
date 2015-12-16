@@ -25,14 +25,12 @@ import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.models.Bee;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
-import fr.pierrecavalet.bestexcuseever.views.BeeView;
-import fr.pierrecavalet.bestexcuseever.views.BeeAdapter;
+import fr.pierrecavalet.bestexcuseever.adapters.BeeAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private ArrayList<Bee> mBeeList = new ArrayList<Bee>();
-    private ArrayList<BeeView> mBeeViewList = new ArrayList<BeeView>();
     private Menu mMenu;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -45,17 +43,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONArray beesListJSON = (JSONArray) args[0];
-                    LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-                    layout.setOrientation(LinearLayout.VERTICAL);
                     try {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
                             mBeeList.add(bee);
-
-                            //BeeView beeView = new BeeView(MainActivity.this, bee, mSocket);
-                            //mBeeViewList.add(beeView);
-                            //layout.addView(beeView);
                         }
                         mAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {

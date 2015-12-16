@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever.views;
+package fr.pierrecavalet.bestexcuseever.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
