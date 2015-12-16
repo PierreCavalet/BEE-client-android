@@ -3,6 +3,7 @@ package fr.pierrecavalet.bestexcuseever.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
@@ -10,6 +11,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,8 @@ import fr.pierrecavalet.bestexcuseever.views.CommentsView;
 public class CommentActivity extends AppCompatActivity {
 
     private Socket mSocket;
-    private BeeView mBeeView;
+    private TextView mAuthor;
+    private TextView mContent;
 
     private Emitter.Listener onBeeCommentsList = new Emitter.Listener() {
         @Override
@@ -42,8 +45,8 @@ public class CommentActivity extends AppCompatActivity {
                             Comment comment = new Comment(commentJSONObject);
                             listComment.add(comment);
                         }
-                        CommentsView commentsView = new CommentsView(CommentActivity.this, listComment);
-                        layout.addView(commentsView);
+                        //CommentsView commentsView = new CommentsView(CommentActivity.this, listComment);
+                        //layout.addView(commentsView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -68,9 +71,10 @@ public class CommentActivity extends AppCompatActivity {
             try {
                 JSONObject beeJSONObject = new JSONObject(beeString);
                 Bee bee = new Bee(beeJSONObject);
-                mBeeView = new BeeView(CommentActivity.this, bee, mSocket);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.commentLayout);
-                layout.addView(mBeeView);
+                mAuthor = (TextView) findViewById(R.id.author);
+                mAuthor.setText(bee.getUser());
+                mContent = (TextView) findViewById(R.id.content);
+                mContent.setText(bee.getContent());
 
             } catch (JSONException e) {
                 e.printStackTrace();

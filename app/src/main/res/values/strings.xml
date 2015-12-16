@@ -29,5 +29,6 @@
     </string>
     <string name="no_address_found">Pas d\'adresse trouvée</string>
     <string name="address_found">L\'adresse a été trouvée</string>
+    <string name="card_transition">transition</string>
 
 </resources>

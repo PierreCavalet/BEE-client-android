@@ -3,6 +3,8 @@ package fr.pierrecavalet.bestexcuseever.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,12 +26,17 @@ import fr.pierrecavalet.bestexcuseever.models.Bee;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 import fr.pierrecavalet.bestexcuseever.views.BeeView;
+import fr.pierrecavalet.bestexcuseever.views.BeeAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
+    private ArrayList<Bee> mBeeList = new ArrayList<Bee>();
     private ArrayList<BeeView> mBeeViewList = new ArrayList<BeeView>();
     private Menu mMenu;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
         @Override
@@ -44,10 +51,13 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
-                            BeeView beeView = new BeeView(MainActivity.this, bee, mSocket);
-                            mBeeViewList.add(beeView);
-                            layout.addView(beeView);
+                            mBeeList.add(bee);
+
+                            //BeeView beeView = new BeeView(MainActivity.this, bee, mSocket);
+                            //mBeeViewList.add(beeView);
+                            //layout.addView(beeView);
                         }
+                        mAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -74,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // socket handling
         try {
             SocketHandler.setSocket(IO.socket("http://149.202.49.136:1337"));
         } catch (URISyntaxException e) {}
@@ -83,6 +95,17 @@ public class MainActivity extends AppCompatActivity {
         mSocket.connect();
         mSocket.emit("askBeesList");
         setContentView(R.layout.activity_main);
+
+        // recycler view handling
+        mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify the adapter
+        mAdapter = new BeeAdapter(mBeeList, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
