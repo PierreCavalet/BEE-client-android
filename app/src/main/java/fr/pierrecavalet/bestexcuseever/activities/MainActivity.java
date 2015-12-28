@@ -1,10 +1,13 @@
 package fr.pierrecavalet.bestexcuseever.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +16,8 @@ import android.widget.LinearLayout;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 
 import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.models.Bee;
+import fr.pierrecavalet.bestexcuseever.services.RegistrationIntentService;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 import fr.pierrecavalet.bestexcuseever.adapters.BeeAdapter;
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu mMenu;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
         @Override
@@ -50,6 +56,29 @@ public class MainActivity extends AppCompatActivity {
                             mBeeList.add(bee);
                         }
                         mAdapter.notifyDataSetChanged();
+                        mRecyclerView.scrollToPosition(mBeeList.size()-1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onNewBee = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject beeJSONObject = (JSONObject) args[0];
+                        Bee bee = new Bee(beeJSONObject);
+                        mBeeList.add(bee);
+                        mAdapter.notifyItemInserted(mBeeList.size()-1);
+                        mRecyclerView.scrollToPosition(mBeeList.size()-1);
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(500);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -84,9 +113,16 @@ public class MainActivity extends AppCompatActivity {
         mSocket = SocketHandler.getSocket();
         mSocket.on("beesList", onBeesList);
         mSocket.on("signInResult", onSignInResult);
+        mSocket.on("newBee", onNewBee);
         mSocket.connect();
         mSocket.emit("askBeesList");
+
+        // view
         setContentView(R.layout.activity_main);
+
+        // gcm token
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
 
         // recycler view handling
         mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
@@ -94,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManager.setReverseLayout(true);
 
         // specify the adapter
         mAdapter = new BeeAdapter(mBeeList, this);

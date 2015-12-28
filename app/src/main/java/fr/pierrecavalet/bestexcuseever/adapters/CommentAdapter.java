@@ -22,6 +22,7 @@ import fr.pierrecavalet.bestexcuseever.models.Comment;
  */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder>{
     private List<Comment> mComments;
+    private static int selectedItem = -1;
 
     public CommentAdapter(List<Comment> comments){
         this.mComments = comments;
@@ -37,9 +38,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         final Comment comment = mComments.get(position);
-        //holder.author.setText(bee.getUser());
-        //holder.content.setText(bee.getContent());
-        View v = holder.cardView;
+        holder.author.setText(comment.getUsername());
+        holder.content.setText(comment.getContent());
+        if(position != 0) {
+            holder.lineTop.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -48,19 +51,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
-        public CardView cardView;
         public TextView author;
         public TextView content;
-        public Button like;
-        public Button dislike;
+        public View lineTop;
+        public View lineBottom;
 
         CommentViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
-            author = (TextView) itemView.findViewById(R.id.author);
-            content = (TextView) itemView.findViewById(R.id.content);
-            like = (Button) itemView.findViewById(R.id.like);
-            dislike = (Button) itemView.findViewById(R.id.dislike);
+            author = (TextView) itemView.findViewById(R.id.comment_author);
+            content = (TextView) itemView.findViewById(R.id.comment_content);
+            lineTop = itemView.findViewById(R.id.line_top);
+            lineBottom = itemView.findViewById(R.id.line_bottom);
         }
     }
 

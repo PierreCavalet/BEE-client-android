@@ -1,4 +1,4 @@
-package fr.pierrecavalet.bestexcuseever;
+package fr.pierrecavalet.bestexcuseever.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -7,13 +7,15 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import fr.pierrecavalet.bestexcuseever.Constants;
+import fr.pierrecavalet.bestexcuseever.R;
 
 /**
  * Created by pierre on 13/12/15.
@@ -32,6 +34,7 @@ public class FetchAddressIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.i("test", "test");
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         String errorMessage = "";

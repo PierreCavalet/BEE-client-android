@@ -21,7 +21,7 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 
 import fr.pierrecavalet.bestexcuseever.Constants;
-import fr.pierrecavalet.bestexcuseever.FetchAddressIntentService;
+import fr.pierrecavalet.bestexcuseever.services.FetchAddressIntentService;
 import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.models.Bee;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
