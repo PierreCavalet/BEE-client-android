@@ -33,20 +33,13 @@
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
-        <!-- <service
-            android:name="com.example.MyGcmListenerService"
+        <service
+            android:name=".services.BeeGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-        <service
-            android:name="com.example.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service> -->
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
