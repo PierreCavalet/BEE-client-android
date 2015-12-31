@@ -68,7 +68,7 @@ public class AddBeeActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(message)) {
             return;
         }
-        Bee bee = new Bee(UserHandler.getUsername(), "No location yet", null, message, 0, 0);
+        Bee bee = new Bee(UserHandler.getUsername(), "No location yet", null, message, 0);
         mMessage.setText("");
         mSocket.emit("sendBee", bee.toJSONObject());
     }

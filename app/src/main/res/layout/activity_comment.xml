@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:transitionName="@string/card_transition"
-    android:id="@+id/commentLayout"
+    android:id="@+id/comment_layout"
     android:background="#FFFFFF"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
@@ -35,7 +35,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="5dp"
-        android:paddingBottom="2dp"
+        android:paddingBottom="15dp"
         android:textColor="#ff272727"
         android:textSize="15dp"
         android:text="Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
@@ -43,30 +43,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DISLIKE"
-        android:id="@+id/dislike"
-        android:textColor="@color/colorButtonDislike"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_below="@id/content"
-        android:layout_alignParentRight="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LIKE"
-        android:id="@+id/like"
-        android:textColor="@color/colorButtonLike"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_below="@id/content"
-        android:layout_toLeftOf="@id/dislike"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/comment_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/like" />
+        android:layout_below="@id/content" />
 
 </RelativeLayout>

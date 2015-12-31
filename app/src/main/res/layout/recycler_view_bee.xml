@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/card_view"
+        card_view:cardBackgroundColor="@color/colorCardBackground"
         card_view:cardCornerRadius="3dp"
         android:layout_marginTop="9dp"
         android:layout_marginLeft="9dp"
@@ -21,23 +22,41 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score"
+                android:text="0"
+                android:textSize="26dp"
+                android:paddingRight="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp" />
+
             <ImageView
                 android:id="@+id/image_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_create_black_36dp"
-                android:layout_marginTop="5dp"/>
+                android:src="@drawable/couronne_violette"
+                android:adjustViewBounds="true"
+                android:maxWidth="30dp"
+                android:maxHeight="30dp"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/score"/>
 
             <TextView
                 android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="36sp"
+                android:textColor="@color/colorTitleCard"
+                android:textSize="30sp"
                 android:text="Test"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/image_author"
-                android:layout_toEndOf="@+id/image_author"/>
+                android:paddingTop="5dp"
+                android:paddingLeft="12dp" />
+
+
 
 
             <TextView
@@ -48,7 +67,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="5dp"
                 android:paddingBottom="2dp"
-                android:textColor="#ff272727"
+                android:textColor="@color/colorTextCard"
                 android:textSize="15dp"
                 android:text="Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
                 android:layout_below="@+id/author"
@@ -65,6 +84,20 @@
                 android:layout_below="@id/content"
                 android:layout_alignParentRight="true"/>
 
+            <TextView
+                android:id="@+id/pipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="10dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/colorTextCard"
+                android:textSize="18dp"
+                android:text="|"
+                android:layout_below="@id/content"
+                android:layout_toLeftOf="@id/dislike"/>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +106,7 @@
                 android:textColor="@color/colorButtonLike"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_below="@id/content"
-                android:layout_toLeftOf="@id/dislike"/>
+                android:layout_toLeftOf="@id/pipe"/>
 
 
 

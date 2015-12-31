@@ -20,7 +20,7 @@ import fr.pierrecavalet.bestexcuseever.activities.MainActivity;
  */
 public class BeeGcmListenerService extends GcmListenerService {
 
-    private static final String TAG = "MyGcmListenerService";
+    private static final String TAG = "BeeGcmListenerService";
 
     @Override
     public void onMessageReceived(String from, Bundle data) {

@@ -1,10 +1,22 @@
 package fr.pierrecavalet.bestexcuseever.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -25,6 +37,7 @@ import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 public class CommentActivity extends AppCompatActivity {
 
     private Socket mSocket;
+    private Bee mBee;
     private ArrayList<Comment> mComments = new ArrayList<Comment>();
     private TextView mAuthor;
     private TextView mContent;
@@ -47,7 +60,6 @@ public class CommentActivity extends AppCompatActivity {
                             mComments.add(comment);
                         }
                         mAdapter.notifyDataSetChanged();
-                        Log.d("socket", "reception des commentaires");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -71,18 +83,17 @@ public class CommentActivity extends AppCompatActivity {
             String beeString = extras.getString("bee");
             try {
                 JSONObject beeJSONObject = new JSONObject(beeString);
-                Bee bee = new Bee(beeJSONObject);
+                mBee = new Bee(beeJSONObject);
                 mAuthor = (TextView) findViewById(R.id.author);
-                mAuthor.setText(bee.getUser());
+                mAuthor.setText(mBee.getUser());
                 mContent = (TextView) findViewById(R.id.content);
-                mContent.setText(bee.getContent());
-                mSocket.emit("askBeeComments", bee.getId());
+                mContent.setText(mBee.getContent());
+                mSocket.emit("askBeeComments", mBee.getId());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -91,4 +102,6 @@ public class CommentActivity extends AppCompatActivity {
         mAdapter = new CommentAdapter(mComments);
         mRecyclerView.setAdapter(mAdapter);
     }
+
+
 }

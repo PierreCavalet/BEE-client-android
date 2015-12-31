@@ -17,8 +17,8 @@ public class Bee {
     private String location;
     private String time;
     private String content;
-    private int up;
-    private int down;
+    private int score;
+    private int myScore;
     private ArrayList<Comment> comments;
 
     public Bee() {
@@ -31,19 +31,20 @@ public class Bee {
         this.location = (String) beeJSONObject.get("location");
         this.time = (String) beeJSONObject.get("time");
         this.content = (String) beeJSONObject.get("content");
-        this.up = (int) beeJSONObject.get("up");
-        this.down = (int) beeJSONObject.get("down");
+        this.score = (int) beeJSONObject.get("score");
+        this.myScore = 0;
+        //this.myScore = (int) beeJSONObject.get("myScore");
         comments = new ArrayList<Comment>();
     }
 
-    public Bee(String user, String location, String time, String content, int up, int down) {
+    public Bee(String user, String location, String time, String content, int score) {
         this.id = 0;
         this.user = user;
         this.location = location;
         this.time = time;
         this.content = content;
-        this.up = up;
-        this.down = down;
+        this.score = score;
+        this.myScore = 0;
         comments = new ArrayList<Comment>();
     }
 
@@ -59,6 +60,18 @@ public class Bee {
         return id;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public int getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(int score) {
+        myScore = score;
+    }
+
     public JSONObject toJSONObject() throws JSONException {
         JSONObject jo = new JSONObject();
         jo.put("id", this.id);
@@ -66,8 +79,8 @@ public class Bee {
         jo.put("location", this.location);
         jo.put("time", this.time);
         jo.put("content", this.content);
-        jo.put("up", this.up);
-        jo.put("down", this.down);
+        jo.put("score", this.score);
+        jo.put("myScore", this.myScore);
         return jo;
     }
 
