@@ -40,7 +40,7 @@ public class MainActivity extends CustomActionBarActivity {
     private ArrayList<Bee> mBeeList = new ArrayList<Bee>();
     private Menu mMenu;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private BeeAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
     private Emitter.Listener onBeesList = new Emitter.Listener() {
@@ -55,6 +55,7 @@ public class MainActivity extends CustomActionBarActivity {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
+                            Log.i("listener", String.valueOf(bee.getMyScore()));
                             mBeeList.add(bee);
                         }
                         mAdapter.notifyDataSetChanged();
@@ -98,6 +99,10 @@ public class MainActivity extends CustomActionBarActivity {
                     if ((int) args[0] == 1) {
                         MenuItem writeBee = mMenu.findItem(R.id.action_write_bee);
                         writeBee.setVisible(true);
+                        mBeeList = new ArrayList<Bee>();
+                        mAdapter.setBees(mBeeList);
+                        mAdapter.notifyDataSetChanged();
+                        mSocket.emit("askBeesList");
                     }
                 }
             });

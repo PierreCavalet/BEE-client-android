@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.activities.CommentActivity;
 import fr.pierrecavalet.bestexcuseever.models.Bee;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
+import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 
 /**
  * Created by pierre on 16/12/15.
@@ -45,6 +47,10 @@ public class BeeAdapter extends RecyclerView.Adapter<BeeAdapter.BeeViewHolder>{
         this.mSocket = SocketHandler.getSocket();
     }
 
+    public void setBees(List<Bee> bees) {
+        mBees = bees;
+    }
+
     @Override
     public BeeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_bee, parent, false);
@@ -58,6 +64,11 @@ public class BeeAdapter extends RecyclerView.Adapter<BeeAdapter.BeeViewHolder>{
         holder.author.setText(bee.getUser());
         holder.content.setText(bee.getContent());
         holder.score.setText(String.valueOf(bee.getScore()));
+        try {
+            Log.i("adapter", bee.toJSONObject().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // cardview onClickListener
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +126,13 @@ public class BeeAdapter extends RecyclerView.Adapter<BeeAdapter.BeeViewHolder>{
                 });
                 colorAnimationForward.start();
                 holder.like.setEnabled(false);
-                holder.score.setText(String.valueOf(bee.getScore() + 1));
+                if(bee.getMyScore() == -1) {
+                    bee.setScore(bee.getScore() + 2);
+                } else {
+                    bee.setScore(bee.getScore() + 1);
+                }
+                bee.setMyScore(1);
+                holder.score.setText(String.valueOf(bee.getScore()));
                 holder.dislike.setEnabled(true);
 
                 JSONObject rateBee = new JSONObject();
@@ -162,7 +179,13 @@ public class BeeAdapter extends RecyclerView.Adapter<BeeAdapter.BeeViewHolder>{
                 });
                 colorAnimationForward.start();
                 holder.dislike.setEnabled(false);
-                holder.score.setText(String.valueOf(bee.getScore() - 1));
+                if(bee.getMyScore() == 1) {
+                    bee.setScore(bee.getScore() - 2);
+                } else {
+                    bee.setScore(bee.getScore() - 1);
+                }
+                bee.setMyScore(-1);
+                holder.score.setText(String.valueOf(bee.getScore()));
                 holder.like.setEnabled(true);
 
                 JSONObject rateBee = new JSONObject();
@@ -176,11 +199,14 @@ public class BeeAdapter extends RecyclerView.Adapter<BeeAdapter.BeeViewHolder>{
         });
 
         if(bee.getMyScore() == -1) {
-            holder.dislike.setEnabled(false);
-            holder.score.setText(String.valueOf(bee.getScore() - 1));
+            holder.like.setEnabled(true);
         } else if (bee.getMyScore() == 1) {
-            holder.like.setEnabled(false);
-            holder.score.setText(String.valueOf(bee.getScore() + 1));
+            holder.dislike.setEnabled(true);
+        } else {
+            if(UserHandler.getUsername() != null) {
+                holder.like.setEnabled(true);
+                holder.dislike.setEnabled(true);
+            }
         }
     }
 

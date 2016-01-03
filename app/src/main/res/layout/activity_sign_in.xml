@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
@@ -24,13 +25,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
-        android:id="@+id/send_button"/>
+        android:id="@+id/send_button"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
-        android:id="@+id/sign_up_button"/>
+        android:id="@+id/sign_up_button"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <TextView
         android:layout_width="fill_parent"

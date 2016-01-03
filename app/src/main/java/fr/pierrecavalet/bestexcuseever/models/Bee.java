@@ -32,8 +32,7 @@ public class Bee {
         this.time = (String) beeJSONObject.get("time");
         this.content = (String) beeJSONObject.get("content");
         this.score = (int) beeJSONObject.get("score");
-        this.myScore = 0;
-        //this.myScore = (int) beeJSONObject.get("myScore");
+        this.myScore = (int) beeJSONObject.get("myScore");
         comments = new ArrayList<Comment>();
     }
 
@@ -62,6 +61,10 @@ public class Bee {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getMyScore() {

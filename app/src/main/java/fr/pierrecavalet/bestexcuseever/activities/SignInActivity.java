@@ -20,7 +20,7 @@ import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends CustomActionBarActivity {
 
     private EditText mInputAccount;
     private EditText mInputPassword;

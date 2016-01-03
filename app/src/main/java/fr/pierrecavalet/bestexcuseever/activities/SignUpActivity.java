@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import fr.pierrecavalet.bestexcuseever.R;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends CustomActionBarActivity {
 
     private EditText mInputAccount;
     private EditText mInputPassword;

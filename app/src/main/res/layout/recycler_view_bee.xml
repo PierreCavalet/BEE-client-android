@@ -82,6 +82,7 @@
                 android:textColor="@color/colorButtonDislike"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_below="@id/content"
+                android:enabled="false"
                 android:layout_alignParentRight="true"/>
 
             <TextView
@@ -106,6 +107,7 @@
                 android:textColor="@color/colorButtonLike"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_below="@id/content"
+                android:enabled="false"
                 android:layout_toLeftOf="@id/pipe"/>
 
 

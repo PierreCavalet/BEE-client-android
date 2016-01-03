@@ -3,7 +3,6 @@ package fr.pierrecavalet.bestexcuseever;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.text.Spannable;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
 import android.util.LruCache;
@@ -12,15 +11,11 @@ import android.util.LruCache;
  * Created by pierre on 31/12/15.
  */
 public class TypefaceSpan extends MetricAffectingSpan {
-    /** An <code>LruCache</code> for previously loaded typefaces. */
     private static LruCache<String, Typeface> sTypefaceCache =
             new LruCache<String, Typeface>(12);
 
     private Typeface mTypeface;
 
-    /**
-     * Load the {@link Typeface} and apply to a {@link Spannable}.
-     */
     public TypefaceSpan(Context context, String typefaceName) {
         mTypeface = sTypefaceCache.get(typefaceName);
 

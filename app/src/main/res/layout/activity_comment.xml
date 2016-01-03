@@ -1,54 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:transitionName="@string/card_transition"
-    android:id="@+id/comment_layout"
-    android:background="#FFFFFF"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
 
-    <ImageView
-        android:id="@+id/image_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_create_black_36dp"
-        android:layout_marginTop="5dp"/>
-
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="36sp"
-        android:text="Test"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/image_author"
-        android:layout_toEndOf="@+id/image_author"/>
-
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="5dp"
-        android:paddingBottom="15dp"
-        android:textColor="#ff272727"
-        android:textSize="15dp"
-        android:text="Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
-        android:layout_below="@+id/author"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/content" />
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:transitionName="@string/card_transition"
+        android:id="@+id/comment_layout"
+        android:background="#FFFFFF"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="26dp"
+            android:paddingRight="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp" />
+
+
+        <ImageView
+            android:id="@+id/image_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/couronne_violette"
+            android:adjustViewBounds="true"
+            android:maxWidth="30dp"
+            android:maxHeight="30dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/score"/>
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTitleCard"
+            android:textSize="30sp"
+            android:text="Test"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp" />
+
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:text="Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
+            android:layout_below="@+id/author"/>
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="15dp"
+            android:layout_below="@+id/content"/>
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/content" />
+
+        <EditText
+            android:id="@+id/comment_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:hint="@string/comment_hint"
+            android:layout_below="@id/mail" />
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/send"
+            android:layout_below="@id/comment_edit"
+            android:layout_alignParentRight="true"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:layout_below="@id/send_button" />
+
+
+
+    </RelativeLayout>
+</ScrollView>

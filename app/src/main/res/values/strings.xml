@@ -32,5 +32,7 @@
     <string name="card_transition">transition</string>
     <string name="new_bee_notification_title">Une nouvelle BEE a été ajouté!</string>
     <string name="new_bee_notification_content">Consultez tout de suite cette BEE</string>
+    <string name="comment_hint">Commentaire</string>
+    <string name="locationHint">Localisation</string>
 
 </resources>

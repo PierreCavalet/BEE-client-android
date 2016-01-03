@@ -27,7 +27,7 @@ import fr.pierrecavalet.bestexcuseever.models.Bee;
 import fr.pierrecavalet.bestexcuseever.sync.SocketHandler;
 import fr.pierrecavalet.bestexcuseever.sync.UserHandler;
 
-public class AddBeeActivity extends AppCompatActivity implements
+public class AddBeeActivity extends CustomActionBarActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private EditText mMessage;
@@ -43,13 +43,10 @@ public class AddBeeActivity extends AppCompatActivity implements
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
-            // Display the address string
-            // or an error message sent from the intent service.
-            mLocation.setText(resultData.getString(Constants.RESULT_DATA_KEY));
-
             // Show a toast message if an address was found.
             if (resultCode == Constants.SUCCESS_RESULT) {
                 showToast(getString(R.string.address_found));
+                mLocation.setText(resultData.getString(Constants.RESULT_DATA_KEY));
             }
 
         }
@@ -68,8 +65,14 @@ public class AddBeeActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(message)) {
             return;
         }
-        Bee bee = new Bee(UserHandler.getUsername(), "No location yet", null, message, 0);
+
+        String location = mLocation.getText().toString().trim();
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        Bee bee = new Bee(UserHandler.getUsername(), location, null, message, 0);
         mMessage.setText("");
+        mLocation.setText("");
         mSocket.emit("sendBee", bee.toJSONObject());
     }
 
