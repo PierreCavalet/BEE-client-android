@@ -8,11 +8,13 @@ import org.json.JSONObject;
  */
 public class Comment {
 
+    private int idbee;
     private String username;
     private String content;
     private String time;
 
-    public Comment(String username, String content) {
+    public Comment(int idBee, String username, String content) {
+        this.idbee = idBee;
         this.username = username;
         this.content = content;
     }
@@ -21,6 +23,15 @@ public class Comment {
         this.username = (String) beeJSONObject.get("user");
         this.time = (String) beeJSONObject.get("time");
         this.content = (String) beeJSONObject.get("content");
+    }
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("idbee", this.idbee);
+        jo.put("user", this.username);
+        jo.put("content", this.content);
+        jo.put("time", this.time);
+        return jo;
     }
 
     public String getUsername() {

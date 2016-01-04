@@ -157,7 +157,8 @@ public class CommentActivity extends CustomActionBarActivity {
             return;
         }
         mMessage.setText("");
-        mSocket.emit("newComment", message);
+        Comment comment = new Comment(mBee.getId(), UserHandler.getUsername(), message);
+        mSocket.emit("sendComment", comment.toJSONObject());
     }
 
 
