@@ -1,0 +1,5 @@
+<root>
+  <item name='android.R.drawable dialog_holo_light_frame'>
+    <annotation name='java.lang.annotation.Deprecated' />
+  </item>
+</root>

@@ -30,8 +30,8 @@
     <string name="no_address_found">Pas d\'adresse trouvée</string>
     <string name="address_found">L\'adresse a été trouvée</string>
     <string name="card_transition">transition</string>
-    <string name="new_bee_notification_title">Une nouvelle BEE a été ajouté!</string>
-    <string name="new_bee_notification_content">Consultez tout de suite cette BEE</string>
+    <string name="new_bee_notification_title">Best Excuse Eveer</string>
+    <string name="new_bee_notification_content">Une nouvelle BEE a été ajoutée!</string>
     <string name="comment_hint">Commentaire</string>
     <string name="locationHint">Localisation</string>
 

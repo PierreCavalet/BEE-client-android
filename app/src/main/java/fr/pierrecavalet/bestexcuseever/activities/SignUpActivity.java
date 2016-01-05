@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,6 +50,7 @@ public class SignUpActivity extends CustomActionBarActivity {
         JSONObject jo = new JSONObject();
         jo.put("account", account);
         jo.put("password", password);
+        Log.d("signup", jo.toString());
         mSocket.emit("signUp", jo);
     }
 

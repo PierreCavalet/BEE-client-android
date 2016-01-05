@@ -55,7 +55,6 @@ public class MainActivity extends CustomActionBarActivity {
                         for (int i = 0; i < beesListJSON.length(); i++) {
                             JSONObject beeJSONObject = (JSONObject) beesListJSON.get(i);
                             Bee bee = new Bee(beeJSONObject);
-                            Log.i("listener", String.valueOf(bee.getMyScore()));
                             mBeeList.add(bee);
                         }
                         mAdapter.notifyDataSetChanged();
@@ -76,6 +75,7 @@ public class MainActivity extends CustomActionBarActivity {
                 public void run() {
                     try {
                         JSONObject beeJSONObject = (JSONObject) args[0];
+                        Log.d("newBee", beeJSONObject.toString());
                         Bee bee = new Bee(beeJSONObject);
                         mBeeList.add(bee);
                         mAdapter.notifyItemInserted(mBeeList.size()-1);
